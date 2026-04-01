@@ -1,7 +1,6 @@
 """Module de collecte des donnees (RSS et scraping web)."""
 
 import json
-import feedparser
 import requests
 import re
 import time
@@ -9,7 +8,6 @@ from urllib.parse import quote_plus
 from urllib.parse import urlparse
 from datetime import datetime
 from typing import List, Dict
-from bs4 import BeautifulSoup
 import logging
 
 from src.config import (
@@ -24,6 +22,26 @@ logger = logging.getLogger(__name__)
 
 class NewsCollector:
     """Collecte des actualites depuis des flux RSS et des pages web."""
+
+    @staticmethod
+    def _get_feedparser():
+        try:
+            import feedparser
+            return feedparser
+        except Exception as exc:
+            raise ImportError(
+                "feedparser est requis pour la collecte RSS"
+            ) from exc
+
+    @staticmethod
+    def _get_beautiful_soup():
+        try:
+            from bs4 import BeautifulSoup
+            return BeautifulSoup
+        except Exception as exc:
+            raise ImportError(
+                "beautifulsoup4 est requis pour le scraping web"
+            ) from exc
     
     def __init__(self):
         self.articles = []
@@ -56,6 +74,7 @@ class NewsCollector:
             html_text = str(html_content)
 
         html_text = html_text[:300000]
+        BeautifulSoup = self._get_beautiful_soup()
         soup = BeautifulSoup(html_text, "html.parser")
 
         for tag in soup(["script", "style", "nav", "footer", "header", "aside", "noscript"]):
@@ -91,6 +110,7 @@ class NewsCollector:
 
         try:
             response = self._fetch_with_retry(article_url)
+            BeautifulSoup = self._get_beautiful_soup()
             soup = BeautifulSoup(response.content, "html.parser")
 
             candidate_urls = []
@@ -257,11 +277,25 @@ class NewsCollector:
         articles = []
         seen_links = set()
 
-        for query in queries:
+        logger.info(
+            "Demarrage collecte RSS multi-query: %s requetes, cible=%s-%s, max_par_requete=%s",
+            len(queries),
+            target_min,
+            target_max,
+            max_articles_per_query,
+        )
+
+        for query_index, query in enumerate(queries, 1):
             query_url = self._build_query_rss_url(query)
             try:
-                logger.info(f"Recuperation RSS multi-query: {query}")
+                logger.info(
+                    "[%s/%s] Recuperation RSS multi-query: %s",
+                    query_index,
+                    len(queries),
+                    query,
+                )
                 response = self._fetch_with_retry(query_url)
+                feedparser = self._get_feedparser()
                 feed = feedparser.parse(response.content)
 
                 if getattr(feed, "bozo", False):
@@ -269,31 +303,81 @@ class NewsCollector:
 
                 source_name = f"Google Actualites - {query}"
                 accepted_for_query = 0
+                duplicate_count = 0
+                too_short_count = 0
+                french_rejected_count = 0
+                parsed_entries = len(getattr(feed, "entries", []) or [])
+
+                logger.info(
+                    "[%s/%s] Flux analyse: %s entrees detectees pour '%s'",
+                    query_index,
+                    len(queries),
+                    parsed_entries,
+                    query,
+                )
 
                 for entry in feed.entries:
                     article = self._extract_rss_article(entry, source_name)
                     article["query_rss"] = query
 
                     if not article.get("lien") or article["lien"] in seen_links:
+                        duplicate_count += 1
                         continue
 
                     if len(article["contenu"]) < 120:
+                        too_short_count += 1
                         continue
 
                     if FRENCH_ONLY:
                         fr_candidate = f"{article['titre']} {article['contenu']}"
                         if not self._is_french_text(fr_candidate):
+                            french_rejected_count += 1
                             continue
 
                     seen_links.add(article["lien"])
                     articles.append(article)
                     accepted_for_query += 1
 
+                    logger.info(
+                        "[%s/%s] Article accepte (%s/%s) | titre='%s' | source='%s'",
+                        query_index,
+                        len(queries),
+                        accepted_for_query,
+                        max_articles_per_query,
+                        article["titre"][:90],
+                        article["source"],
+                    )
+
                     if accepted_for_query >= max_articles_per_query:
+                        logger.info(
+                            "[%s/%s] Limite atteinte pour '%s': %s articles gardes",
+                            query_index,
+                            len(queries),
+                            query,
+                            accepted_for_query,
+                        )
                         break
 
                     if len(articles) >= target_max:
+                        logger.info(
+                            "Limite globale atteinte: %s/%s articles",
+                            len(articles),
+                            target_max,
+                        )
                         break
+
+                logger.info(
+                    "[%s/%s] Resume '%s': detectes=%s, gardes=%s, doublons=%s, trop_courts=%s, non_francais=%s, total_courant=%s",
+                    query_index,
+                    len(queries),
+                    query,
+                    parsed_entries,
+                    accepted_for_query,
+                    duplicate_count,
+                    too_short_count,
+                    french_rejected_count,
+                    len(articles),
+                )
 
                 if len(articles) >= target_max:
                     break
@@ -333,7 +417,12 @@ class NewsCollector:
             )
 
         self.articles.extend(articles)
-        logger.info(f"{len(articles)} articles collectes depuis RSS multi-query")
+        logger.info(
+            "Collecte RSS multi-query terminee: %s articles ajoutes, %s liens uniques, %s sources en echec",
+            len(articles),
+            len(seen_links),
+            len(self.failed_sources),
+        )
         return articles
     
     def collect_from_web(self, urls: List[str]) -> List[Dict]:
@@ -350,7 +439,7 @@ class NewsCollector:
         
         for url in urls:
             try:
-                logger.info(f"Scraping de la page: {url}")
+                logger.info("Scraping de la page: %s", url)
                 response = requests.get(
                     url,
                     timeout=15,
@@ -367,6 +456,7 @@ class NewsCollector:
                     content_text = self._normalize_text(content.get_text(strip=True)[:2500])
 
                     if FRENCH_ONLY and not self._is_french_text(f"{title_text} {content_text}"):
+                        logger.info("Scraping ignore (non francais): %s", url)
                         continue
 
                     article = {
@@ -382,13 +472,23 @@ class NewsCollector:
                         "secteur_estime": self._infer_secteur(title_text, content_text),
                     }
                     articles.append(article)
+                    logger.info(
+                        "Scraping accepte: titre='%s' | domaine='%s'",
+                        title_text[:90],
+                        article["source"],
+                    )
                     
             except Exception as e:
                 logger.error(f"Erreur de scraping {url}: {str(e)}")
                 self.failed_sources.append({"source": url, "error": str(e)})
         
         self.articles.extend(articles)
-        logger.info(f"{len(articles)} articles collectes par scraping web")
+        logger.info(
+            "Collecte web terminee: %s articles ajoutes, %s URLs traitees, %s sources en echec",
+            len(articles),
+            len(urls),
+            len(self.failed_sources),
+        )
         return articles
     
     def get_all_articles(self) -> List[Dict]:
@@ -399,7 +499,11 @@ class NewsCollector:
         """Enregistrer les articles collectes dans un fichier JSON."""
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(self.articles, f, indent=2, ensure_ascii=False)
-        logger.info(f"{len(self.articles)} articles enregistres dans {filepath}")
+        logger.info(
+            "Sauvegarde terminee: %s articles enregistres dans %s",
+            len(self.articles),
+            filepath,
+        )
     
     def get_collection_summary(self) -> Dict:
         """Obtenir un resume du processus de collecte."""
@@ -415,8 +519,10 @@ if __name__ == "__main__":
     # Exemple d'utilisation
     from src.config import RAW_DATA_FILE, TARGETED_RSS_QUERIES
     
+    logger.info("Lancement du module data_collection en mode autonome")
     collector = NewsCollector()
     collector.collect_from_targeted_multi_query_rss(TARGETED_RSS_QUERIES)
     collector.save_to_json(str(RAW_DATA_FILE))
     
+    logger.info("Resume collecte: %s", collector.get_collection_summary())
     print(collector.get_collection_summary())
