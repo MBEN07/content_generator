@@ -60,7 +60,7 @@ class DataAnalyzer:
         mots = self._safe_numeric_series(df, 'nombre_mots')
         caracteres = self._safe_numeric_series(df, 'nombre_caracteres')
         dates = pd.to_datetime(df['publie'], errors='coerce', utc=True) if 'publie' in df.columns else pd.Series(dtype='datetime64[ns, UTC]')
-        now_utc = pd.Timestamp.utcnow()
+        now_utc = pd.Timestamp.now(tz="UTC")
         freshness_24h = 0.0
         freshness_72h = 0.0
         valid_dates_count = int(dates.notna().sum()) if len(dates) > 0 else 0

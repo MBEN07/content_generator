@@ -1,16 +1,16 @@
 {
-  "date_analyse": "2026-04-16T16:10:44.262916",
+  "date_analyse": "2026-04-17T00:46:06.450821",
   "statistiques_base": {
     "articles_totaux": 29,
-    "moyenne_mots": 15.827586206896552,
+    "moyenne_mots": 15.517241379310345,
     "mediane_mots": 15.0,
-    "moyenne_caracteres": 110.20689655172414,
+    "moyenne_caracteres": 103.37931034482759,
     "plage_dates": {
-      "premiere": "2026-04-13 13:01:27+00:00",
-      "derniere": "2026-04-16 14:07:13+00:00"
+      "premiere": "2026-04-13 12:18:48+00:00",
+      "derniere": "2026-04-16 21:50:41+00:00"
     },
     "fraicheur": {
-      "taux_24h_pct": 72.41379310344827,
+      "taux_24h_pct": 65.51724137931035,
       "taux_72h_pct": 93.10344827586206,
       "dates_valides": 29
     }
@@ -41,70 +41,70 @@
     "secteurs_uniques": 6,
     "repartition_secteurs": {
       "tech": 15,
-      "business": 8,
+      "business": 7,
       "culture": 3,
-      "telecom": 1,
-      "commerce": 1,
-      "finance": 1
+      "energie": 2,
+      "industrie": 1,
+      "commerce": 1
     }
   },
   "analyse_mots_cles": {
     "total_mots_cles_uniques": 20,
     "mots_cles_principaux": {
-      "entreprises": 6,
-      "transformation": 5,
-      "digitale": 5,
+      "france": 7,
       "cloud": 5,
-      "intelligence": 4,
-      "artificielle": 4,
-      "technologie": 3,
-      "stellantis": 3,
-      "accélère": 3,
-      "microsoft": 3,
-      "client": 3,
-      "numérique": 3,
-      "france": 3,
-      "chaîne": 3,
-      "youtube": 3,
-      "trump": 3,
-      "2026": 2,
+      "2026": 4,
+      "entreprises": 4,
+      "transformation": 4,
+      "digitale": 3,
+      "entreprise": 3,
+      "tech": 2,
       "monde": 2,
-      "ambitions": 2,
-      "blue": 2
+      "boursorama": 2,
+      "quelle": 2,
+      "grâce": 2,
+      "agriculture": 2,
+      "client": 2,
+      "ardian": 2,
+      "stellantis": 2,
+      "accélère": 2,
+      "stratégique": 2,
+      "achats": 2,
+      "face": 2
     },
     "frequence_mots_cles": {
-      "entreprises": 6,
-      "transformation": 5,
-      "digitale": 5,
+      "france": 7,
       "cloud": 5,
-      "intelligence": 4,
-      "artificielle": 4,
-      "technologie": 3,
-      "stellantis": 3,
-      "accélère": 3,
-      "microsoft": 3,
-      "client": 3,
-      "numérique": 3,
-      "france": 3,
-      "chaîne": 3,
-      "youtube": 3,
-      "trump": 3,
-      "2026": 2,
+      "2026": 4,
+      "entreprises": 4,
+      "transformation": 4,
+      "digitale": 3,
+      "entreprise": 3,
+      "tech": 2,
       "monde": 2,
-      "ambitions": 2,
-      "blue": 2
+      "boursorama": 2,
+      "quelle": 2,
+      "grâce": 2,
+      "agriculture": 2,
+      "client": 2,
+      "ardian": 2,
+      "stellantis": 2,
+      "accélère": 2,
+      "stratégique": 2,
+      "achats": 2,
+      "face": 2
     },
     "qualite_signal": {
-      "bruit_pct": 0.7142857142857143,
-      "signal_pct": 99.28571428571429
+      "bruit_pct": 0.7490636704119851,
+      "signal_pct": 99.25093632958801
     }
   },
   "analyse_tendances": {
     "articles_par_jour": {
       "2026-04-13": 2,
       "2026-04-14": 3,
-      "2026-04-15": 7,
-      "2026-04-16": 17
+      "2026-04-15": 5,
+      "2026-04-16": 19
     },
     "tendance_haussiere": true,
     "moyenne_articles_jour": 7.25,
@@ -112,11 +112,11 @@
     "moyenne_mobile_7j": {
       "2026-04-13": 2.0,
       "2026-04-14": 2.5,
-      "2026-04-15": 4.0,
+      "2026-04-15": 3.3333333333333335,
       "2026-04-16": 7.25
     },
     "croissance_7j_pct": 0.0,
-    "volatilite_cv": 0.9447688546222766
+    "volatilite_cv": 1.0940693364865097
   },
   "insights_metier": [
     "Couverture totale: 29 contenus analyses pour la creation de contenu.",
@@ -124,22 +124,22 @@
     "Concentration des sources: top source=20.7% | HHI=0.201 (elevee).",
     "Format editorial: une longueur moyenne de 15 mots correspond a des mises a jour rapides.",
     "Diversite thematique: 29 articles etiquetes avec des sujets pertinents pour l'analyse editoriale.",
-    "Fraicheur des contenus: 72.4% publies sous 24h, 93.1% sous 72h.",
-    "Dynamique recentre: croissance 7j=0.0% | volatilite CV=0.94.",
+    "Fraicheur des contenus: 65.5% publies sous 24h, 93.1% sous 72h.",
+    "Dynamique recentre: croissance 7j=0.0% | volatilite CV=1.09.",
     "Potentiel de croissance: la production de contenu pilotee par la donnee accelere la visibilite et la performance marketing."
   ],
   "kpis": {
     "statistiques_base": {
       "articles_totaux": 29,
-      "moyenne_mots": 15.827586206896552,
+      "moyenne_mots": 15.517241379310345,
       "mediane_mots": 15.0,
-      "moyenne_caracteres": 110.20689655172414,
+      "moyenne_caracteres": 103.37931034482759,
       "plage_dates": {
-        "premiere": "2026-04-13 13:01:27+00:00",
-        "derniere": "2026-04-16 14:07:13+00:00"
+        "premiere": "2026-04-13 12:18:48+00:00",
+        "derniere": "2026-04-16 21:50:41+00:00"
       },
       "fraicheur": {
-        "taux_24h_pct": 72.41379310344827,
+        "taux_24h_pct": 65.51724137931035,
         "taux_72h_pct": 93.10344827586206,
         "dates_valides": 29
       }
@@ -170,70 +170,70 @@
       "secteurs_uniques": 6,
       "repartition_secteurs": {
         "tech": 15,
-        "business": 8,
+        "business": 7,
         "culture": 3,
-        "telecom": 1,
-        "commerce": 1,
-        "finance": 1
+        "energie": 2,
+        "industrie": 1,
+        "commerce": 1
       }
     },
     "analyse_mots_cles": {
       "total_mots_cles_uniques": 20,
       "mots_cles_principaux": {
-        "entreprises": 6,
-        "transformation": 5,
-        "digitale": 5,
+        "france": 7,
         "cloud": 5,
-        "intelligence": 4,
-        "artificielle": 4,
-        "technologie": 3,
-        "stellantis": 3,
-        "accélère": 3,
-        "microsoft": 3,
-        "client": 3,
-        "numérique": 3,
-        "france": 3,
-        "chaîne": 3,
-        "youtube": 3,
-        "trump": 3,
-        "2026": 2,
+        "2026": 4,
+        "entreprises": 4,
+        "transformation": 4,
+        "digitale": 3,
+        "entreprise": 3,
+        "tech": 2,
         "monde": 2,
-        "ambitions": 2,
-        "blue": 2
+        "boursorama": 2,
+        "quelle": 2,
+        "grâce": 2,
+        "agriculture": 2,
+        "client": 2,
+        "ardian": 2,
+        "stellantis": 2,
+        "accélère": 2,
+        "stratégique": 2,
+        "achats": 2,
+        "face": 2
       },
       "frequence_mots_cles": {
-        "entreprises": 6,
-        "transformation": 5,
-        "digitale": 5,
+        "france": 7,
         "cloud": 5,
-        "intelligence": 4,
-        "artificielle": 4,
-        "technologie": 3,
-        "stellantis": 3,
-        "accélère": 3,
-        "microsoft": 3,
-        "client": 3,
-        "numérique": 3,
-        "france": 3,
-        "chaîne": 3,
-        "youtube": 3,
-        "trump": 3,
-        "2026": 2,
+        "2026": 4,
+        "entreprises": 4,
+        "transformation": 4,
+        "digitale": 3,
+        "entreprise": 3,
+        "tech": 2,
         "monde": 2,
-        "ambitions": 2,
-        "blue": 2
+        "boursorama": 2,
+        "quelle": 2,
+        "grâce": 2,
+        "agriculture": 2,
+        "client": 2,
+        "ardian": 2,
+        "stellantis": 2,
+        "accélère": 2,
+        "stratégique": 2,
+        "achats": 2,
+        "face": 2
       },
       "qualite_signal": {
-        "bruit_pct": 0.7142857142857143,
-        "signal_pct": 99.28571428571429
+        "bruit_pct": 0.7490636704119851,
+        "signal_pct": 99.25093632958801
       }
     },
     "analyse_tendances": {
       "articles_par_jour": {
         "2026-04-13": 2,
         "2026-04-14": 3,
-        "2026-04-15": 7,
-        "2026-04-16": 17
+        "2026-04-15": 5,
+        "2026-04-16": 19
       },
       "tendance_haussiere": true,
       "moyenne_articles_jour": 7.25,
@@ -241,11 +241,11 @@
       "moyenne_mobile_7j": {
         "2026-04-13": 2.0,
         "2026-04-14": 2.5,
-        "2026-04-15": 4.0,
+        "2026-04-15": 3.3333333333333335,
         "2026-04-16": 7.25
       },
       "croissance_7j_pct": 0.0,
-      "volatilite_cv": 0.9447688546222766
+      "volatilite_cv": 1.0940693364865097
     }
   }
 }
