@@ -171,6 +171,33 @@ class ArticleGenerator:
         en_hits = sum(1 for token in tokens if token in en_words)
         return en_hits >= 6
 
+    def _french_validation_metrics(self, text: str) -> Dict[str, int]:
+        txt = self._clean_text(text).lower()
+        tokens = re.findall(r"[a-zA-Z]+", txt)
+        if not tokens:
+            return {"fr_count": 0, "en_count": 0, "token_count": 0, "english_hits": 0}
+
+        fr_words = {
+            "le", "la", "les", "de", "des", "du", "un", "une", "et", "en", "dans",
+            "sur", "pour", "par", "avec", "est", "sont", "ce", "cette", "ces", "que",
+            "qui", "pas", "plus", "analyse", "marche", "entreprise", "contenu", "strategie",
+            "industrie", "energie", "technologie", "gouvernement", "economie", "politique",
+        }
+        en_words = {
+            "the", "and", "for", "with", "from", "that", "this", "are", "is", "was",
+            "were", "will", "market", "business", "news", "analysis", "company", "content",
+            "official", "group", "work", "trial", "leader", "team",
+        }
+
+        fr_count = sum(1 for token in tokens if token in fr_words)
+        en_count = sum(1 for token in tokens if token in en_words)
+        return {
+            "fr_count": fr_count,
+            "en_count": en_count,
+            "token_count": len(tokens),
+            "english_hits": en_count,
+        }
+
     def classify_editorial_sector(self, article_data: Dict) -> str:
         raw = self._clean_text(
             f"{article_data.get('titre', '')} {article_data.get('contenu', '')} {' '.join(article_data.get('etiquettes', []))}"
@@ -387,6 +414,14 @@ class ArticleGenerator:
     def generate_article(self, article_data: Dict, max_new_tokens: int = GENERATION_MAX_NEW_TOKENS) -> Dict:
         try:
             secteur_ia = self.classify_editorial_sector(article_data)
+            article_title = self._clean_text(article_data.get("titre", "N/D"))
+            article_source = self._clean_text(article_data.get("source", "N/D"))
+            logger.info(
+                "Generation demarree | titre='%s' | source='%s' | secteur='%s'",
+                article_title[:120],
+                article_source[:80],
+                secteur_ia,
+            )
             prompt = self.create_prompt(article_data)
             deterministic_temp = min(float(GENERATION_TEMPERATURE), 0.2)
             raw_output, source_llm = self._generate_text_via_providers(
@@ -398,6 +433,12 @@ class ArticleGenerator:
             if not raw_output:
                 raise RuntimeError("Aucun contenu genere par les providers IA")
 
+            logger.info(
+                "Generation brute recue | source_llm='%s' | taille_sortie=%s caracteres",
+                source_llm or "N/D",
+                len(raw_output),
+            )
+
             structured = self._normalize_structured_article(
                 self._extract_json_object(raw_output) or {}
             )
@@ -405,11 +446,27 @@ class ArticleGenerator:
                 raise ValueError("Le provider IA n'a pas retourne un JSON article valide")
 
             article_content = self._render_structured_article_text(structured)
+            metrics = self._french_validation_metrics(article_content)
+            logger.info(
+                "Validation langue | titre='%s' | fr_count=%s | en_count=%s | tokens=%s | english_hits=%s",
+                article_title[:120],
+                metrics["fr_count"],
+                metrics["en_count"],
+                metrics["token_count"],
+                metrics["english_hits"],
+            )
 
             if (
                 (not self._is_mostly_french(article_content))
                 or self._contains_significant_english(article_content)
             ):
+                logger.warning(
+                    "Contenu rejete pour langue insuffisamment francaise | titre='%s' | source_llm='%s' | fr_count=%s | en_count=%s",
+                    article_title[:120],
+                    source_llm or "N/D",
+                    metrics["fr_count"],
+                    metrics["en_count"],
+                )
                 raise ValueError("Le contenu genere n'est pas suffisamment francophone")
 
             mots_cles = article_data.get("etiquettes", [])
@@ -424,6 +481,12 @@ class ArticleGenerator:
                 raise ValueError("Extraction de mots-cles insuffisante")
 
             quality_score = self._calculate_quality_score(article_content, self._clean_text(article_data.get("contenu", "")))
+            logger.info(
+                "Generation reussie | titre='%s' | score_qualite=%s | mots_cles=%s",
+                article_title[:120],
+                quality_score,
+                ", ".join(mots_cles[:5]) if mots_cles else "N/D",
+            )
             return {
                 "titre_original": article_data.get("titre"),
                 "source_originale": article_data.get("source"),
@@ -441,7 +504,12 @@ class ArticleGenerator:
                 "contenu_structure": structured,
             }
         except Exception as exc:
-            logger.error(f"Erreur pendant la generation d'article: {str(exc)}")
+            logger.error(
+                "Erreur pendant la generation d'article | titre='%s' | source='%s' | erreur=%s",
+                self._clean_text(article_data.get("titre", "N/D"))[:120],
+                self._clean_text(article_data.get("source", "N/D"))[:80],
+                str(exc),
+            )
             raise
 
     def _split_sentences_for_summary(self, text: str) -> List[str]:
@@ -553,10 +621,32 @@ Publication LinkedIn:
 
     def batch_generate_articles(self, articles_data: List[Dict]) -> List[Dict]:
         generated_articles = []
+        failed_articles = 0
         for index, article_data in enumerate(articles_data, 1):
-            logger.info(f"Generation article {index}/{len(articles_data)}")
-            generated_articles.append(self.generate_article(article_data))
-        logger.info(f"{len(generated_articles)} articles generes dans le lot")
+            title = self._clean_text(article_data.get("titre", "N/D"))
+            logger.info(
+                "Generation article %s/%s | titre='%s'",
+                index,
+                len(articles_data),
+                title[:120],
+            )
+            try:
+                generated_articles.append(self.generate_article(article_data))
+            except Exception as exc:
+                failed_articles += 1
+                logger.warning(
+                    "Article ignore dans le lot | index=%s | titre='%s' | erreur=%s",
+                    index,
+                    title[:120],
+                    str(exc),
+                )
+                continue
+        logger.info(
+            "Lot de generation termine | succes=%s | echecs=%s | total=%s",
+            len(generated_articles),
+            failed_articles,
+            len(articles_data),
+        )
         return generated_articles
 
     def save_generated_articles(self, articles: List[Dict], filepath: str):
