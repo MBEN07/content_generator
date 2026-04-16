@@ -1090,7 +1090,7 @@ if page == "Tableau de bord":
     perf_col1, perf_col2 = st.columns(2)
     with perf_col1:
         st.markdown('<div class="plot-title">Thèmes principaux</div>', unsafe_allow_html=True)
-        st.markdown('<div class="plot-subtitle">Thèmes les plus couverts dans la génération.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="plot-subtitle">Thèmes les plus couverts.</div>', unsafe_allow_html=True)
         if not generated_df.empty and "topic_frequent" in generated_df.columns:
             if "articles_sources_topic" in generated_df.columns:
                 top_topics_df = (
