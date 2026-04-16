@@ -1,4 +1,5 @@
 ﻿# Pipeline de génération de contenu automatisé
+<img width="1803" height="737" alt="image" src="https://github.com/user-attachments/assets/403e2a7b-cdba-4d55-90d3-d14fa226c0d1" />
 
 Documentation technique de l'architecture, des outils et des methodes d'implementation.
 
