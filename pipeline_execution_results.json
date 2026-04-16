@@ -1,0 +1,192 @@
+{
+  "run_id": "run_20260416_152128_db04e932",
+  "debut_pipeline": "2026-04-16T15:21:28.179173",
+  "etapes": [
+    {
+      "etape": "collecte",
+      "statut": "succes",
+      "articles_collectes": 30,
+      "cible_articles": "20-30",
+      "sources_en_echec": 0,
+      "details_sources_en_echec": [],
+      "horodatage": "2026-04-16T15:23:01.350934",
+      "duree_secondes": 93.170581,
+      "run_id": "run_20260416_152128_db04e932"
+    },
+    {
+      "etape": "nettoyage",
+      "statut": "succes",
+      "enregistrements_traites": 29,
+      "rapport_nettoyage": {
+        "valeurs_manquantes_comblees": 0,
+        "doublons_supprimes": 0,
+        "articles_invalides_supprimes": 1,
+        "enregistrements_initiaux": 30,
+        "enregistrements_finaux": 29,
+        "enregistrements_supprimes": 1,
+        "date_nettoyage": "2026-04-16T15:23:01.423901"
+      },
+      "fichier_validation_nettoye": "C:\\Users\\hp\\Desktop\\industrial-ai-news-engine\\output\\cleaned_articles_validation.json",
+      "horodatage": "2026-04-16T15:23:01.433697",
+      "duree_secondes": 0.081177,
+      "run_id": "run_20260416_152128_db04e932"
+    },
+    {
+      "etape": "analyse",
+      "statut": "succes",
+      "kpis": {
+        "statistiques_base": {
+          "articles_totaux": 29,
+          "moyenne_mots": 15.827586206896552,
+          "mediane_mots": 15.0,
+          "moyenne_caracteres": 110.20689655172414,
+          "plage_dates": {
+            "premiere": "2026-04-13 13:01:27+00:00",
+            "derniere": "2026-04-16 14:07:13+00:00"
+          },
+          "fraicheur": {
+            "taux_24h_pct": 79.3103448275862,
+            "taux_72h_pct": 96.55172413793103,
+            "dates_valides": 29
+          }
+        },
+        "analyse_sources": {
+          "sources_uniques": 5,
+          "sources_principales": {
+            "Google Actualites - technologie entreprise": 6,
+            "Google Actualites - cloud entreprise": 6,
+            "Google Actualites - intelligence artificielle": 6,
+            "Google Actualites - intelligence artificielle entreprise": 6,
+            "Google Actualites - transformation digitale": 5
+          },
+          "toutes_sources": {
+            "Google Actualites - technologie entreprise": 6,
+            "Google Actualites - cloud entreprise": 6,
+            "Google Actualites - intelligence artificielle": 6,
+            "Google Actualites - intelligence artificielle entreprise": 6,
+            "Google Actualites - transformation digitale": 5
+          },
+          "concentration": {
+            "top_source_part_pct": 20.689655172413794,
+            "hhi": 0.20095124851367419,
+            "niveau": "elevee"
+          }
+        },
+        "analyse_secteurs": {
+          "secteurs_uniques": 6,
+          "repartition_secteurs": {
+            "tech": 15,
+            "business": 8,
+            "culture": 3,
+            "telecom": 1,
+            "commerce": 1,
+            "finance": 1
+          }
+        },
+        "analyse_mots_cles": {
+          "total_mots_cles_uniques": 20,
+          "mots_cles_principaux": {
+            "entreprises": 6,
+            "transformation": 5,
+            "digitale": 5,
+            "cloud": 5,
+            "intelligence": 4,
+            "artificielle": 4,
+            "technologie": 3,
+            "stellantis": 3,
+            "acc\u00e9l\u00e8re": 3,
+            "microsoft": 3,
+            "client": 3,
+            "num\u00e9rique": 3,
+            "france": 3,
+            "cha\u00eene": 3,
+            "youtube": 3,
+            "trump": 3,
+            "2026": 2,
+            "monde": 2,
+            "ambitions": 2,
+            "blue": 2
+          },
+          "frequence_mots_cles": {
+            "entreprises": 6,
+            "transformation": 5,
+            "digitale": 5,
+            "cloud": 5,
+            "intelligence": 4,
+            "artificielle": 4,
+            "technologie": 3,
+            "stellantis": 3,
+            "acc\u00e9l\u00e8re": 3,
+            "microsoft": 3,
+            "client": 3,
+            "num\u00e9rique": 3,
+            "france": 3,
+            "cha\u00eene": 3,
+            "youtube": 3,
+            "trump": 3,
+            "2026": 2,
+            "monde": 2,
+            "ambitions": 2,
+            "blue": 2
+          },
+          "qualite_signal": {
+            "bruit_pct": 0.7142857142857143,
+            "signal_pct": 99.28571428571429
+          }
+        },
+        "analyse_tendances": {
+          "articles_par_jour": {
+            "2026-04-13": 2,
+            "2026-04-14": 3,
+            "2026-04-15": 7,
+            "2026-04-16": 17
+          },
+          "tendance_haussiere": true,
+          "moyenne_articles_jour": 7.25,
+          "fenetre_jours": 30,
+          "moyenne_mobile_7j": {
+            "2026-04-13": 2.0,
+            "2026-04-14": 2.5,
+            "2026-04-15": 4.0,
+            "2026-04-16": 7.25
+          },
+          "croissance_7j_pct": 0.0,
+          "volatilite_cv": 0.9447688546222766
+        }
+      },
+      "insights": [
+        "Couverture totale: 29 contenus analyses pour la creation de contenu.",
+        "Source dominante: 'Google Actualites - cloud entreprise' se distingue avec 6 articles, signe d'un fort focus editorial.",
+        "Concentration des sources: top source=20.7% | HHI=0.201 (elevee).",
+        "Format editorial: une longueur moyenne de 15 mots correspond a des mises a jour rapides.",
+        "Diversite thematique: 29 articles etiquetes avec des sujets pertinents pour l'analyse editoriale.",
+        "Fraicheur des contenus: 79.3% publies sous 24h, 96.6% sous 72h.",
+        "Dynamique recentre: croissance 7j=0.0% | volatilite CV=0.94.",
+        "Potentiel de croissance: la production de contenu pilotee par la donnee accelere la visibilite et la performance marketing."
+      ],
+      "horodatage": "2026-04-16T15:23:01.492747",
+      "duree_secondes": 0.057341,
+      "run_id": "run_20260416_152128_db04e932"
+    },
+    {
+      "etape": "generation",
+      "statut": "succes",
+      "articles_generes": 3,
+      "topics_selectionnes": [
+        "business",
+        "tech",
+        "culture"
+      ],
+      "nombre_topics_selectionnes": 3,
+      "taux_succes": "100.0%",
+      "erreurs_generation": [],
+      "fichier_exemples_ia": "C:\\Users\\hp\\Desktop\\industrial-ai-news-engine\\output\\ia_examples.json",
+      "horodatage": "2026-04-16T15:23:40.010283",
+      "duree_secondes": 38.515468,
+      "run_id": "run_20260416_152128_db04e932"
+    }
+  ],
+  "fin_pipeline": "2026-04-16T15:23:40.010633",
+  "duree_secondes": 131.83146,
+  "statut_pipeline": "termine"
+}
