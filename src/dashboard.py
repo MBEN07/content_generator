@@ -5,13 +5,12 @@ import math
 import re
 import html
 from collections import Counter
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 import streamlit as st
-import streamlit.components.v1 as components
 from src.config import GENERATED_ARTICLES_LIMIT
 
 
@@ -79,8 +78,46 @@ st.markdown(
         color: var(--ink-0);
         font-weight: 700;
         font-size: 1.25rem;
-        margin-top: 0.9rem;
-        margin-bottom: 0.4rem;
+        margin-top: 0.35rem;
+        margin-bottom: 0.15rem;
+    }
+
+    .preplot-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.55rem;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: linear-gradient(105deg, #ffffff 0%, #f7faff 65%, #f3fbf8 100%);
+        padding: 0.42rem 0.62rem;
+        margin-top: 0.22rem;
+        margin-bottom: 0.12rem;
+    }
+
+    .preplot-title {
+        color: var(--ink-0);
+        font-weight: 700;
+        font-size: 1.0rem;
+        line-height: 1.2;
+    }
+
+    .preplot-subtitle {
+        color: var(--ink-1);
+        font-size: 0.76rem;
+        margin-top: 0.08rem;
+        line-height: 1.25;
+    }
+
+    .preplot-chip {
+        border: 1px solid #c4d6f3;
+        background: #f4f8ff;
+        color: #1f4b99;
+        border-radius: 999px;
+        padding: 0.16rem 0.52rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        white-space: nowrap;
     }
 
     .plot-title {
@@ -120,9 +157,9 @@ st.markdown(
         border: 1px solid var(--line);
         border-radius: 10px;
         background: var(--card);
-        padding: 0.7rem 0.9rem;
-        margin-top: 0.3rem;
-        margin-bottom: 0.6rem;
+        padding: 0.52rem 0.72rem;
+        margin-top: 0.12rem;
+        margin-bottom: 0.18rem;
     }
 
     .insight-card {
@@ -151,8 +188,8 @@ st.markdown(
         border: 1px solid var(--line);
         border-radius: 10px;
         background: #ffffff;
-        padding: 0.62rem 0.72rem;
-        min-height: 84px;
+        padding: 0.48rem 0.6rem;
+        min-height: 64px;
     }
 
     .summary-label {
@@ -375,86 +412,35 @@ def _render_clickable_stat_card(label: str, value: object, delta: str = "", desc
     safe_delta = html.escape(str(delta or "").strip())
     safe_description = html.escape(str(description or "").strip())
     delta_block = f'<div class="summary-delta">{safe_delta}</div>' if safe_delta else ""
-    components.html(
+    st.markdown(
         f"""
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8" />
-<style>
-    html, body {{
-        margin: 0;
-        padding: 0;
-        background: transparent;
-        font-family: 'Space Grotesk', sans-serif;
-    }}
-    details {{
-        width: 100%;
-    }}
-    summary {{
-        list-style: none;
-        cursor: pointer;
-        outline: none;
-    }}
-    summary::-webkit-details-marker {{
-        display: none;
-    }}
-    .summary-card {{
-        border: 1px solid #d5dee9;
-        border-radius: 10px;
-        background: #ffffff;
-        padding: 0.62rem 0.72rem;
-        min-height: 84px;
-        box-sizing: border-box;
-    }}
-    .summary-label {{
-        color: #42566f;
-        font-size: 0.9rem;
-        margin-bottom: 0.15rem;
-        font-weight: 600;
-    }}
-    .summary-value {{
-        color: #142033;
-        font-weight: 700;
-        font-size: 1.2rem;
-        line-height: 1.35;
-        white-space: normal;
-        word-break: break-word;
-        overflow-wrap: anywhere;
-    }}
-    .summary-delta {{
-        margin-top: 0.22rem;
-        color: #42566f;
-        font-size: 0.88rem;
-    }}
-    .summary-help {{
-        margin-top: 0.42rem;
-        padding: 0.5rem 0.7rem;
-        border-left: 3px solid #1f4b99;
-        background: #f8fbff;
-        border-radius: 0 8px 8px 0;
-        color: #42566f;
-        font-size: 0.8rem;
-        line-height: 1.35;
-    }}
-</style>
-</head>
-<body>
-    <details title="{safe_description}">
-        <summary>
-            <div class="summary-card">
-                <div class="summary-label">{safe_label}</div>
-                <div class="summary-value">{safe_value}</div>
-                {delta_block}
-            </div>
-        </summary>
-        <div class="summary-help">{safe_description}</div>
-    </details>
-</body>
-</html>
+<div class="summary-card" title="{safe_description}">
+    <div class="summary-label">{safe_label}</div>
+    <div class="summary-value">{safe_value}</div>
+    {delta_block}
+</div>
 """,
-        height=170,
-        scrolling=False,
+        unsafe_allow_html=True,
+    )
+
+
+def _render_preplot_header(title: str, subtitle: str = "", chip: str = ""):
+    safe_title = html.escape(str(title or "").strip() or "Section")
+    safe_subtitle = html.escape(str(subtitle or "").strip())
+    safe_chip = html.escape(str(chip or "").strip())
+    subtitle_html = f'<div class="preplot-subtitle">{safe_subtitle}</div>' if safe_subtitle else ""
+    chip_html = f'<div class="preplot-chip">{safe_chip}</div>' if safe_chip else ""
+    st.markdown(
+        f"""
+<div class="preplot-header">
+    <div>
+        <div class="preplot-title">{safe_title}</div>
+        {subtitle_html}
+    </div>
+    {chip_html}
+</div>
+""",
+        unsafe_allow_html=True,
     )
 
 
@@ -831,9 +817,13 @@ if page == "Tableau de bord":
         if st.button("Actualiser", use_container_width=True):
             st.rerun()
 
-    st.markdown('<div class="section-label">Aperçu instantané</div>', unsafe_allow_html=True)
+    _render_preplot_header(
+        "Aperçu instantané",
+        "État système et indicateurs de fraîcheur en temps réel.",
+        "Live",
+    )
     status_col1, status_col2, status_col3, status_col4 = st.columns(4)
-    last_update_label = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    last_update_label = (datetime.now() - timedelta(hours=24)).strftime("%Y-%m-%d %H:%M:%S")
     last_run_status = execution_data.get("statut_pipeline", "N/D") if execution_data else "N/D"
     status_label_map = {
         "termine": "Terminé",
@@ -917,7 +907,11 @@ if page == "Tableau de bord":
     topic_df = _topic_distribution_dataframe(generated_df)
     stage_df = _pipeline_stage_dataframe(execution_data)
 
-    st.markdown('<div class="section-label">Résumé exécutif</div>', unsafe_allow_html=True)
+    _render_preplot_header(
+        "Résumé exécutif",
+        "Synthèse run, source dominante et secteur clé.",
+        "Management",
+    )
     summary_col1, summary_col2, summary_col3 = st.columns([1.2, 1, 1])
     with summary_col1:
         if execution_data:
@@ -956,7 +950,11 @@ if page == "Tableau de bord":
                 description="Secteur qui concentre le plus grand volume d'articles dans l'analyse.",
             )
 
-    st.markdown('<div class="section-label">Tableau KPI</div>', unsafe_allow_html=True)
+    _render_preplot_header(
+        "Tableau KPI",
+        "Score de fraîcheur, concentration, signal et croissance.",
+        "Performance",
+    )
     scorecard_col1, scorecard_col2, scorecard_col3, scorecard_col4 = st.columns(4)
 
     freshness_24h = 0.0
@@ -1090,7 +1088,7 @@ if page == "Tableau de bord":
     perf_col1, perf_col2 = st.columns(2)
     with perf_col1:
         st.markdown('<div class="plot-title">Thèmes principaux</div>', unsafe_allow_html=True)
-        st.markdown('<div class="plot-subtitle">Thèmes les plus couverts dans la génération.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="plot-subtitle">Thèmes les plus couverts.</div>', unsafe_allow_html=True)
         if not generated_df.empty and "topic_frequent" in generated_df.columns:
             if "articles_sources_topic" in generated_df.columns:
                 top_topics_df = (
