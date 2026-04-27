@@ -1,6 +1,6 @@
 {
-  "run_id": "run_20260416_152128_db04e932",
-  "debut_pipeline": "2026-04-16T15:21:28.179173",
+  "run_id": "run_20260416_191248_f2d2e354",
+  "debut_pipeline": "2026-04-16T19:12:48.656201",
   "etapes": [
     {
       "etape": "collecte",
@@ -9,9 +9,9 @@
       "cible_articles": "20-30",
       "sources_en_echec": 0,
       "details_sources_en_echec": [],
-      "horodatage": "2026-04-16T15:23:01.350934",
-      "duree_secondes": 93.170581,
-      "run_id": "run_20260416_152128_db04e932"
+      "horodatage": "2026-04-16T19:14:25.506596",
+      "duree_secondes": 96.849332,
+      "run_id": "run_20260416_191248_f2d2e354"
     },
     {
       "etape": "nettoyage",
@@ -24,12 +24,12 @@
         "enregistrements_initiaux": 30,
         "enregistrements_finaux": 29,
         "enregistrements_supprimes": 1,
-        "date_nettoyage": "2026-04-16T15:23:01.423901"
+        "date_nettoyage": "2026-04-16T19:14:25.724509"
       },
       "fichier_validation_nettoye": "C:\\Users\\hp\\Desktop\\industrial-ai-news-engine\\output\\cleaned_articles_validation.json",
-      "horodatage": "2026-04-16T15:23:01.433697",
-      "duree_secondes": 0.081177,
-      "run_id": "run_20260416_152128_db04e932"
+      "horodatage": "2026-04-16T19:14:25.744048",
+      "duree_secondes": 0.236,
+      "run_id": "run_20260416_191248_f2d2e354"
     },
     {
       "etape": "analyse",
@@ -37,34 +37,34 @@
       "kpis": {
         "statistiques_base": {
           "articles_totaux": 29,
-          "moyenne_mots": 15.827586206896552,
+          "moyenne_mots": 15.724137931034482,
           "mediane_mots": 15.0,
-          "moyenne_caracteres": 110.20689655172414,
+          "moyenne_caracteres": 106.37931034482759,
           "plage_dates": {
-            "premiere": "2026-04-13 13:01:27+00:00",
-            "derniere": "2026-04-16 14:07:13+00:00"
+            "premiere": "2026-04-13 12:18:48+00:00",
+            "derniere": "2026-04-16 18:00:26+00:00"
           },
           "fraicheur": {
-            "taux_24h_pct": 79.3103448275862,
-            "taux_72h_pct": 96.55172413793103,
+            "taux_24h_pct": 68.96551724137932,
+            "taux_72h_pct": 89.65517241379311,
             "dates_valides": 29
           }
         },
         "analyse_sources": {
           "sources_uniques": 5,
           "sources_principales": {
-            "Google Actualites - technologie entreprise": 6,
+            "Google Actualites - transformation digitale": 6,
             "Google Actualites - cloud entreprise": 6,
             "Google Actualites - intelligence artificielle": 6,
             "Google Actualites - intelligence artificielle entreprise": 6,
-            "Google Actualites - transformation digitale": 5
+            "Google Actualites - technologie entreprise": 5
           },
           "toutes_sources": {
-            "Google Actualites - technologie entreprise": 6,
+            "Google Actualites - transformation digitale": 6,
             "Google Actualites - cloud entreprise": 6,
             "Google Actualites - intelligence artificielle": 6,
             "Google Actualites - intelligence artificielle entreprise": 6,
-            "Google Actualites - transformation digitale": 5
+            "Google Actualites - technologie entreprise": 5
           },
           "concentration": {
             "top_source_part_pct": 20.689655172413794,
@@ -73,12 +73,13 @@
           }
         },
         "analyse_secteurs": {
-          "secteurs_uniques": 6,
+          "secteurs_uniques": 7,
           "repartition_secteurs": {
-            "tech": 15,
-            "business": 8,
-            "culture": 3,
+            "tech": 16,
+            "business": 7,
+            "culture": 2,
             "telecom": 1,
+            "energie": 1,
             "commerce": 1,
             "finance": 1
           }
@@ -86,72 +87,72 @@
         "analyse_mots_cles": {
           "total_mots_cles_uniques": 20,
           "mots_cles_principaux": {
-            "entreprises": 6,
-            "transformation": 5,
+            "transformation": 6,
             "digitale": 5,
+            "france": 5,
             "cloud": 5,
-            "intelligence": 4,
-            "artificielle": 4,
-            "technologie": 3,
-            "stellantis": 3,
+            "entreprises": 4,
+            "stellantis": 4,
+            "microsoft": 4,
+            "2026": 3,
             "acc\u00e9l\u00e8re": 3,
-            "microsoft": 3,
             "client": 3,
-            "num\u00e9rique": 3,
-            "france": 3,
-            "cha\u00eene": 3,
-            "youtube": 3,
-            "trump": 3,
-            "2026": 2,
+            "entreprise": 3,
+            "intelligence": 3,
+            "artificielle": 3,
+            "snapchat": 3,
             "monde": 2,
-            "ambitions": 2,
-            "blue": 2
+            "agriculture": 2,
+            "technologie": 2,
+            "blue": 2,
+            "strat\u00e9gie": 2,
+            "pilot\u00e9e": 2
           },
           "frequence_mots_cles": {
-            "entreprises": 6,
-            "transformation": 5,
+            "transformation": 6,
             "digitale": 5,
+            "france": 5,
             "cloud": 5,
-            "intelligence": 4,
-            "artificielle": 4,
-            "technologie": 3,
-            "stellantis": 3,
+            "entreprises": 4,
+            "stellantis": 4,
+            "microsoft": 4,
+            "2026": 3,
             "acc\u00e9l\u00e8re": 3,
-            "microsoft": 3,
             "client": 3,
-            "num\u00e9rique": 3,
-            "france": 3,
-            "cha\u00eene": 3,
-            "youtube": 3,
-            "trump": 3,
-            "2026": 2,
+            "entreprise": 3,
+            "intelligence": 3,
+            "artificielle": 3,
+            "snapchat": 3,
             "monde": 2,
-            "ambitions": 2,
-            "blue": 2
+            "agriculture": 2,
+            "technologie": 2,
+            "blue": 2,
+            "strat\u00e9gie": 2,
+            "pilot\u00e9e": 2
           },
           "qualite_signal": {
-            "bruit_pct": 0.7142857142857143,
-            "signal_pct": 99.28571428571429
+            "bruit_pct": 0.7380073800738007,
+            "signal_pct": 99.2619926199262
           }
         },
         "analyse_tendances": {
           "articles_par_jour": {
-            "2026-04-13": 2,
+            "2026-04-13": 3,
             "2026-04-14": 3,
             "2026-04-15": 7,
-            "2026-04-16": 17
+            "2026-04-16": 16
           },
           "tendance_haussiere": true,
           "moyenne_articles_jour": 7.25,
           "fenetre_jours": 30,
           "moyenne_mobile_7j": {
-            "2026-04-13": 2.0,
-            "2026-04-14": 2.5,
-            "2026-04-15": 4.0,
+            "2026-04-13": 3.0,
+            "2026-04-14": 3.0,
+            "2026-04-15": 4.333333333333333,
             "2026-04-16": 7.25
           },
           "croissance_7j_pct": 0.0,
-          "volatilite_cv": 0.9447688546222766
+          "volatilite_cv": 0.8455896164482538
         }
       },
       "insights": [
@@ -160,13 +161,13 @@
         "Concentration des sources: top source=20.7% | HHI=0.201 (elevee).",
         "Format editorial: une longueur moyenne de 15 mots correspond a des mises a jour rapides.",
         "Diversite thematique: 29 articles etiquetes avec des sujets pertinents pour l'analyse editoriale.",
-        "Fraicheur des contenus: 79.3% publies sous 24h, 96.6% sous 72h.",
-        "Dynamique recentre: croissance 7j=0.0% | volatilite CV=0.94.",
+        "Fraicheur des contenus: 69.0% publies sous 24h, 89.7% sous 72h.",
+        "Dynamique recentre: croissance 7j=0.0% | volatilite CV=0.85.",
         "Potentiel de croissance: la production de contenu pilotee par la donnee accelere la visibilite et la performance marketing."
       ],
-      "horodatage": "2026-04-16T15:23:01.492747",
-      "duree_secondes": 0.057341,
-      "run_id": "run_20260416_152128_db04e932"
+      "horodatage": "2026-04-16T19:14:25.967146",
+      "duree_secondes": 0.220342,
+      "run_id": "run_20260416_191248_f2d2e354"
     },
     {
       "etape": "generation",
@@ -181,12 +182,12 @@
       "taux_succes": "100.0%",
       "erreurs_generation": [],
       "fichier_exemples_ia": "C:\\Users\\hp\\Desktop\\industrial-ai-news-engine\\output\\ia_examples.json",
-      "horodatage": "2026-04-16T15:23:40.010283",
-      "duree_secondes": 38.515468,
-      "run_id": "run_20260416_152128_db04e932"
+      "horodatage": "2026-04-16T19:14:40.393542",
+      "duree_secondes": 14.424231,
+      "run_id": "run_20260416_191248_f2d2e354"
     }
   ],
-  "fin_pipeline": "2026-04-16T15:23:40.010633",
-  "duree_secondes": 131.83146,
+  "fin_pipeline": "2026-04-16T19:14:40.394024",
+  "duree_secondes": 111.737823,
   "statut_pipeline": "termine"
 }
